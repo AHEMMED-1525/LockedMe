@@ -2,10 +2,12 @@ package com.lockedme.operations;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,18 +15,21 @@ public class BusinessLogicMain implements OperationFilesInterface {
 	Scanner input = new Scanner(System.in);
 	List<String> load = new ArrayList<String>();
 	
-	File[] files = new File("C:\\Users\\AHEMMED\\SimpliLearn_FSD_Projects\\FSD_PROJECTS\\FSD_PHASE1_PROJECT").listFiles();
+	File files = new File("C:\\Users\\AHEMMED\\SimpliLearn_FSD_Projects\\FSD_PROJECTS\\FSD_PHASE1_PROJECT\\LockedMe");
+	File[] fileList = files.listFiles();
 	
 	@Override
 	public void showFiles() {
-		for(File file:files) {
-			if(file.isFile()) {
-				load.add(file.getName());
-			}
-			load.forEach(System.out::print);
-		}
-		
 
+		// TODO Auto-generated method stub
+				for(File file : fileList) {
+					if(file.isFile()) {
+						load.add(file.getName());
+						//System.out.println(file.getName());
+					}
+				}
+				load.forEach(System.out::println);
+		
 
 	}
 
@@ -62,22 +67,34 @@ public class BusinessLogicMain implements OperationFilesInterface {
 
 	@Override
 	public void searchFile() {
+		// TODO Auto-generated method stub
 		try {	
-			
-			File directory = new File("C:\\Users\\AHEMMED\\SimpliLearn_FSD_Projects\\FSD_PROJECTS\\FSD_PHASE1_PROJECT");
+			Scanner scan= new Scanner(System.in);
+			File directory = new File("C:\\Users\\AHEMMED\\SimpliLearn_FSD_Projects\\FSD_PROJECTS\\FSD_PHASE1_PROJECT\\LockedMe");
 			System.out.println("Enter the file name which you want to search:");
-			String fileName=input.nextLine();
-			
-			
-			 
+			String fileName=scan.nextLine();
+            File[] files=directory.listFiles();
+            int flag=0;
+            for (File file : files) {
+                String name = file.getName();
+                if (name.equals(fileName)) {
+                        System.out.println("The filename "+fileName+" is present in the directory");
+        				File f= new File(fileName);
+        				Scanner sc1 = new Scanner(f);
+        				while(sc1.hasNextLine()) {
+        				System.out.println(sc1.nextLine());
+        				}
+        			flag=1;	
+                }
+			}
+        if(flag==0) {
+        	System.out.println("File not found");
+        }
         	
-		}catch(Exception ex) {
+		}catch(FileNotFoundException ex) {
 			System.out.println("file not found");
 		}
-				  
-		  
 		
-		 
 	}
 
 }

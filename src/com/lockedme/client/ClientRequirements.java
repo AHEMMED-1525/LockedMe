@@ -1,12 +1,13 @@
 package com.lockedme.client;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import com.lockedme.operations.BusinessLogicMain;
 
 public class ClientRequirements {
 	static Scanner input = new Scanner(System.in);
-	static int option;
+	static int option, data;
 
 	public static void welcomeuser() {
 		System.out.println(" Welcome to ------- LockedMe-App---------------\n");
@@ -14,47 +15,60 @@ public class ClientRequirements {
 		System.out.println(" Developer Details : Develeloped by Ahemmed");
 	}
 
-	public static void menuDetails() {
-
-		BusinessLogicMain business = new BusinessLogicMain();
-
-		System.out.println("Please read the following Instructions:\n" + "1. Enter 1 to show the all files\n"
-				+ "2. Enter 2 to add a file\n" + "3. Enter 3 to delete a file\n" + "4. Enter 4 to search a file\n"
-				+ "5. Enter 5 to exit");
-		System.out.println("Please Enter your Input");
-		option = input.nextInt();
-		switch (option) {
+	public static void menuDetails() throws FileNotFoundException {
+		Scanner sc = new Scanner(System.in);
+		BusinessLogicMain obj = new BusinessLogicMain();
+		int option;
+		do {
+		System.out.println("Enter your choice which you want to select: \n");
+		System.out.println("\t1. Retrieve current filenames in ascending order \n");
+		System.out.println("\t2. Business-level operation menu \n");
+		System.out.println("\t3. Exit from the application \n");
+		
+		option=sc.nextInt();
+		switch(option) {
 		case 1:
-			System.out.println("You entered 1 , please wait files are laoding.......");
-			business.showFiles();
-
+			obj.showFiles();
 			break;
 		case 2:
-			System.out.println("Please Enter your Input");
-			data = input.nextInt();
-			switch(data) {
+			int ch;
+		do {
+			System.out.println("Enter your choice for Business level operation");
+			System.out.println("\t1. Add a file and its content to a directory");
+			System.out.println("\t2. Delete a file from a directory");
+			System.out.println("\t3. Searching a file and showing its content");
+			System.out.println("\t4. Exit from menu");
+			
+			ch=sc.nextInt();
+			switch(ch) {
 			case 1:
-				System.out.println("You have Entered 2 to add the file, please wait to file is adding... ");
-				business.addFile();
+				obj.addFile();
+				break;
+			case 2:
+				obj.deleteFile();
+				break;
+			case 3:
+				obj.searchFile();
+				break;
+			case 4:
+				System.out.println("Exited from the Business Level operation...");
+				System.out.println("---------------------------------\n");
+				break;
+			default:
+				System.out.println("Invalid Choice");
 				break;
 			}
-			
+		}while(ch!=4);
+		break;
 		case 3:
-			System.out.println("You have Entered 3 to delete the file");
-			business.deleteFile();
-			break;
-		case 4:
-			System.out.println("Enter the file name to search");
-			business.searchFile();
-			break;
-		case 5:
-			System.out.println("You are succesfully exited");
-			System.out.println("------------- Thank you ----------------------");
+			System.out.println("Exiting from the application...");
 			break;
 		default:
-			System.out.println("Invalid Choice");
-
+			System.out.println("Invalid choice");
 		}
-
+		
+		//System.out.println("Press 0 to continue");
+		}while(option!=3);
+		
 	}
 }
